@@ -1,0 +1,13 @@
+C:\Users\khalil\source\repos\TEServer\TEServer\bin\Debug\netcoreapp3.1\TEServer.exe
+C:\Users\khalil\source\repos\TEServer\TEServer\bin\Debug\netcoreapp3.1\TEServer.deps.json
+C:\Users\khalil\source\repos\TEServer\TEServer\bin\Debug\netcoreapp3.1\TEServer.runtimeconfig.json
+C:\Users\khalil\source\repos\TEServer\TEServer\bin\Debug\netcoreapp3.1\TEServer.runtimeconfig.dev.json
+C:\Users\khalil\source\repos\TEServer\TEServer\bin\Debug\netcoreapp3.1\TEServer.dll
+C:\Users\khalil\source\repos\TEServer\TEServer\bin\Debug\netcoreapp3.1\TEServer.pdb
+C:\Users\khalil\source\repos\TEServer\TEServer\obj\Debug\netcoreapp3.1\TEServer.csprojAssemblyReference.cache
+C:\Users\khalil\source\repos\TEServer\TEServer\obj\Debug\netcoreapp3.1\TEServer.csproj.CoreCompileInputs.cache
+C:\Users\khalil\source\repos\TEServer\TEServer\obj\Debug\netcoreapp3.1\TEServer.AssemblyInfoInputs.cache
+C:\Users\khalil\source\repos\TEServer\TEServer\obj\Debug\netcoreapp3.1\TEServer.AssemblyInfo.cs
+C:\Users\khalil\source\repos\TEServer\TEServer\obj\Debug\netcoreapp3.1\TEServer.dll
+C:\Users\khalil\source\repos\TEServer\TEServer\obj\Debug\netcoreapp3.1\TEServer.pdb
+C:\Users\khalil\source\repos\TEServer\TEServer\obj\Debug\netcoreapp3.1\TEServer.genruntimeconfig.cache
