@@ -41,5 +41,7 @@
         public static string READY                  = " READY!";
 
         public static string NOT_READY              = " NOT READY!";
+
+        public static string GAME_STARTED           = " Game starting in 3... 2... 1... [Main Thread]";
     }
 }

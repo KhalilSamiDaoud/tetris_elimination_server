@@ -70,6 +70,27 @@
             }
         }
 
+        public static void PlayerGrids(int clientID, string msg)
+        {
+            using (Packet packet = new Packet((int)ServerPackets.playerGrids))
+            {
+                packet.Write(msg);
+                packet.Write(clientID);
+
+                SendTCPDataToAllEx(clientID, packet);
+            }
+        }
+
+        public static void StartGame()
+        {
+            using (Packet packet = new Packet((int)ServerPackets.startGame))
+            {
+                packet.Write(true);
+
+                SendTCPDataToAll(packet);
+            }
+        }
+
         private static void SendTCPData(int clientID, Packet packet)
         {
             packet.WriteLength();

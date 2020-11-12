@@ -11,7 +11,8 @@ namespace TEServer
         playerReadyChange,
         playerListToOne,
         playerListToAll,
-        playerGrids
+        playerGrids,
+        startGame
     }
 
     /// <summary>Sent from client to server.</summary>

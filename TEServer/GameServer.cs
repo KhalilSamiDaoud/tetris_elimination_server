@@ -36,7 +36,8 @@ namespace TEServer
             packetHandlers = new Dictionary<int, PacketHandler>()
             {
                 { (int)ClientPackets.welcomeReceived, ServerHandle.Welcome},
-                { (int)ClientPackets.clientReady, ServerHandle.ClientReady}
+                { (int)ClientPackets.clientReady, ServerHandle.ClientReady},
+                { (int)ClientPackets.clientGrid, ServerHandle.ClientGrid}
             };
 
 
@@ -75,6 +76,24 @@ namespace TEServer
                 if (connectedClients[i].tcp.socket != null)
                 {
                     count++;
+                }
+            }
+
+            return count;
+        }
+
+        public static int CountReadyPlayers()
+        {
+            int count = 0;
+
+            for (int i = 1; i <= MaxPlayers; i++)
+            {
+                if (connectedClients[i].tcp.socket != null)
+                {
+                    if (connectedClients[i].IsReady)
+                    {
+                        count++;
+                    }
                 }
             }
 
