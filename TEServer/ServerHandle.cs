@@ -54,6 +54,26 @@ namespace TEServer
             ValidatePlayerID(clientID, id);
         }
 
+        public static void ClientScore(int clientID, Packet packet)
+        {
+            int id  = packet.ReadInt();
+            int msg = packet.ReadInt();
+
+            PacketSend.PlayerScore(id, msg);
+
+            ValidatePlayerID(clientID, id);
+        }
+
+        public static void ClientGameOver(int clientID, Packet packet)
+        {
+            int id   = packet.ReadInt();
+            bool msg = packet.ReadBool();
+
+            PacketSend.PlayerGameOver(id, msg);
+
+            ValidatePlayerID(clientID, id);
+        }
+
         private static void ValidatePlayerID(int senderID, int packetID)
         {
             if (senderID != packetID)

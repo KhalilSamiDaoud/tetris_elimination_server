@@ -37,7 +37,9 @@ namespace TEServer
             {
                 { (int)ClientPackets.welcomeReceived, ServerHandle.Welcome},
                 { (int)ClientPackets.clientReady, ServerHandle.ClientReady},
-                { (int)ClientPackets.clientGrid, ServerHandle.ClientGrid}
+                { (int)ClientPackets.clientGrid, ServerHandle.ClientGrid},
+                { (int)ClientPackets.clientScore, ServerHandle.ClientScore},
+                { (int)ClientPackets.clientGameOver, ServerHandle.ClientGameOver}
             };
 
 

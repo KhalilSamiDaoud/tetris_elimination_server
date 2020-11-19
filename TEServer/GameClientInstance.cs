@@ -25,6 +25,9 @@ namespace TEServer
 
             PacketSend.PlayerCountChange(uid);
             PacketSend.PlayerListToAll();
+
+            UserName = null;
+            IsReady  = false;
         }
     }
 }

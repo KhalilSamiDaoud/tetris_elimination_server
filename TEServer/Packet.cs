@@ -12,6 +12,8 @@ namespace TEServer
         playerListToOne,
         playerListToAll,
         playerGrids,
+        playerScore,
+        playerGameOver,
         startGame
     }
 
@@ -20,7 +22,9 @@ namespace TEServer
     {
         welcomeReceived = 1,
         clientReady,
-        clientGrid
+        clientGrid,
+        clientScore,
+        clientGameOver
     }
 
     public class Packet : IDisposable

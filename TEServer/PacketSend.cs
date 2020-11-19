@@ -81,6 +81,28 @@
             }
         }
 
+        public static void PlayerScore(int clientID, int score)
+        {
+            using (Packet packet = new Packet((int)ServerPackets.playerScore))
+            {
+                packet.Write(score);
+                packet.Write(clientID);
+
+                SendTCPDataToAllEx(clientID, packet);
+            }
+        }
+
+        public static void PlayerGameOver(int clientID, bool gameOver)
+        {
+            using (Packet packet = new Packet((int)ServerPackets.playerGameOver))
+            {
+                packet.Write(gameOver);
+                packet.Write(clientID);
+
+                SendTCPDataToAllEx(clientID, packet);
+            }
+        }
+
         public static void StartGame()
         {
             using (Packet packet = new Packet((int)ServerPackets.startGame))
