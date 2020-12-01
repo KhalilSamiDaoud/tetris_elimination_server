@@ -8,14 +8,14 @@ namespace TEServer
         public TCP tcp;
 
         public string UserName { get; set; }
-        public bool IsReady    { get; set; }
+        public int Status      { get; set; }
 
         public GameClientInstance(int clientID)
         {
             uid      = clientID;
             tcp      = new TCP(uid);
             UserName = "null";
-            IsReady  = false;
+            Status   = 0;
         }
 
         public void Disconnect()
@@ -27,7 +27,7 @@ namespace TEServer
             PacketSend.PlayerListToAll();
 
             UserName = null;
-            IsReady  = false;
+            Status   = 0;
         }
     }
 }

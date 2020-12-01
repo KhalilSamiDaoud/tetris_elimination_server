@@ -20,7 +20,7 @@
 
         public static string CONNECTION_ATTEMPT     = "Client Attempting connect: ";
 
-        public static string START_SUCCESS          = "Server has successfully started on port ";
+        public static string START_SUCCESS          = "Server has successfully started on ";
 
         public static string RECEIVE_CALLBACK_ERROR = "Error receiving data: ";
 
@@ -41,6 +41,8 @@
         public static string READY                  = " READY!";
 
         public static string NOT_READY              = " NOT READY!";
+
+        public static string IN_GAME                = " IN GAME!";
 
         public static string GAME_STARTED           = " Game starting in 3... 2... 1... [Main Thread]";
     }

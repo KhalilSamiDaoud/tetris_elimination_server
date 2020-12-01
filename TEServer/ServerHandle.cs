@@ -18,21 +18,25 @@ namespace TEServer
             ValidatePlayerID(clientID, id);
         }
 
-        public static void ClientReady(int clientID, Packet packet)
+        public static void ClientStatus(int clientID, Packet packet)
         {
             int id   = packet.ReadInt();
-            bool msg = packet.ReadBool();
+            int msg = packet.ReadInt();
 
-            if (msg)
+            switch(msg)
             {
-                Console.WriteLine(GameServer.connectedClients[id].UserName + Constants.READY);
-            }
-            else
-            {
-                Console.WriteLine(GameServer.connectedClients[id].UserName + Constants.NOT_READY);
+                case 0:
+                    Console.WriteLine(GameServer.connectedClients[id].UserName + Constants.NOT_READY);
+                    break;
+                case 1:
+                    Console.WriteLine(GameServer.connectedClients[id].UserName + Constants.READY);
+                    break;
+                case 2:
+                    Console.WriteLine(GameServer.connectedClients[id].UserName + Constants.IN_GAME);
+                    break;
             }
 
-            GameServer.connectedClients[id].IsReady = msg;
+            GameServer.connectedClients[id].Status = msg;
             PacketSend.PlayerReadyChange(id, msg);
 
             if( GameServer.CountReadyPlayers() == GameServer.MaxPlayers)
@@ -70,6 +74,15 @@ namespace TEServer
             bool msg = packet.ReadBool();
 
             PacketSend.PlayerGameOver(id, msg);
+
+            ValidatePlayerID(clientID, id);
+        }
+
+        public static void ClientReconnect(int clientID, Packet packet)
+        {
+            int id = packet.ReadInt();
+
+            PacketSend.WelcomeVerification(id);
 
             ValidatePlayerID(clientID, id);
         }

@@ -21,10 +21,11 @@ namespace TEServer
     public enum ClientPackets
     {
         welcomeReceived = 1,
-        clientReady,
+        clientStatus,
         clientGrid,
         clientScore,
-        clientGameOver
+        clientGameOver,
+        clientReconnect
     }
 
     public class Packet : IDisposable

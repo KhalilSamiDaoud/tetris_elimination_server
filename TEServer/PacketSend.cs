@@ -2,10 +2,12 @@
 {
     public class PacketSend
     {
-        public static void WelcomeVerification(int clientID, string msg)
+        public static void WelcomeVerification(int clientID)
         {
             using (Packet packet = new Packet((int)ServerPackets.welcome))
             {
+                string msg = "ONLINE-" + GameServer.CountConnectedPlayers().ToString() + "/" + GameServer.MaxPlayers.ToString();
+
                 packet.Write(msg);
                 packet.Write(clientID);
 
@@ -21,7 +23,7 @@
                 {
                     using (Packet packet = new Packet((int)ServerPackets.playerListToAll))
                     {
-                        packet.Write(GameServer.connectedClients[i].IsReady);
+                        packet.Write(GameServer.connectedClients[i].Status);
                         packet.Write(GameServer.connectedClients[i].UserName);
                         packet.Write(GameServer.connectedClients[i].uid);
 
@@ -39,7 +41,7 @@
                 {
                     using (Packet packet = new Packet((int)ServerPackets.playerListToOne))
                     {
-                        packet.Write(GameServer.connectedClients[i].IsReady);
+                        packet.Write(GameServer.connectedClients[i].Status);
                         packet.Write(GameServer.connectedClients[i].UserName);
                         packet.Write(GameServer.connectedClients[i].uid);
 
@@ -49,7 +51,7 @@
             }
         }
 
-        public static void PlayerReadyChange(int clientID, bool msg)
+        public static void PlayerReadyChange(int clientID, int msg)
         {
             using (Packet packet = new Packet((int)ServerPackets.playerReadyChange))
             {

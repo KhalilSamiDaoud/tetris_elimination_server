@@ -33,8 +33,7 @@ namespace TEServer
 
             byteStream.BeginRead(receiveBuffer, 0, bufferSize, ReceiveCallback, null);
 
-            string serverInformation = "ONLINE-" + GameServer.CountConnectedPlayers().ToString() + "/" + GameServer.MaxPlayers.ToString();
-            PacketSend.WelcomeVerification(ID, serverInformation);
+            PacketSend.WelcomeVerification(ID);
         }
 
         public void SendData(Packet packet)
