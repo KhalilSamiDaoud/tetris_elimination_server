@@ -7,10 +7,10 @@ namespace TEServer
 {
     public class GameServer
     {
-        public static TcpListener tcpListener;
         public delegate void PacketHandler(int fromClient, Packet packet);
         public static Dictionary<int, GameClientInstance> connectedClients;
         public static Dictionary<int, PacketHandler> packetHandlers;
+        public static TcpListener tcpListener;
 
         public static int MaxPlayers { get; private set; }
         public static int Port { get; private set; }

@@ -115,6 +115,16 @@
             }
         }
 
+        public static void ServerDisconnect()
+        {
+            using (Packet packet = new Packet((int)ServerPackets.serverDisconnect))
+            {
+                packet.Write(true);
+
+                SendTCPDataToAll(packet);
+            }
+        }
+
         private static void SendTCPData(int clientID, Packet packet)
         {
             packet.WriteLength();

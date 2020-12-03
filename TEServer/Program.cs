@@ -9,6 +9,18 @@ namespace TEServer
         private static bool isRunning;
         private static int maxPlayers;
         private static int port;
+        private static Thread mainThread;
+
+        static void OnProcessExit(object sender, EventArgs e)
+        {
+            if (GameServer.tcpListener != null)
+            {
+                Console.WriteLine(Constants.SHUTDOWN);
+
+                PacketSend.ServerDisconnect();
+                mainThread.Join();
+            }
+        }
 
         public static void StartupPrompt()
         {
@@ -92,6 +104,7 @@ namespace TEServer
                 }
             }
         }
+
         public static void Update()
         {
             ThreadManager.UpdateMain();
@@ -102,13 +115,15 @@ namespace TEServer
             isRunning     = true;
             Console.Title = Constants.TITLE;
 
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+
             StartupPrompt();
             Console.Clear();
 
             Console.WriteLine(Constants.INITIALIZE);
             GameServer.InitializeServer(maxPlayers, port);
 
-            Thread mainThread = new Thread(new ThreadStart(MainThread));
+            mainThread = new Thread(new ThreadStart(MainThread));
             mainThread.Start();
         }
     }

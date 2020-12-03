@@ -14,7 +14,7 @@ namespace TEServer
         {
             uid      = clientID;
             tcp      = new TCP(uid);
-            UserName = "null";
+            UserName = null;
             Status   = 0;
         }
 
@@ -25,6 +25,7 @@ namespace TEServer
 
             PacketSend.PlayerCountChange(uid);
             PacketSend.PlayerListToAll();
+            PacketSend.PlayerGameOver(uid, true);
 
             UserName = null;
             Status   = 0;

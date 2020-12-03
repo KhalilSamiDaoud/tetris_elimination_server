@@ -44,6 +44,8 @@
 
         public static string IN_GAME                = " IN GAME!";
 
-        public static string GAME_STARTED           = " Game starting in 3... 2... 1... [Main Thread]";
+        public static string GAME_STARTED           = "Game starting in 3... 2... 1... [Main Thread]";
+
+        public static string SHUTDOWN               = "INITIALIZING SAFE SHUTDOWN... \nSENDING DISCONNECT REQUEST...";
     }
 }
