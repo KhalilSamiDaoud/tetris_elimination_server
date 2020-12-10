@@ -9,8 +9,8 @@ namespace TEServer
         welcome = 1,
         playerCountChange,
         playerReadyChange,
-        playerListToOne,
-        playerListToAll,
+        playerList,
+        lobbyList,
         playerGrids,
         playerScore,
         playerGameOver,
@@ -18,7 +18,6 @@ namespace TEServer
         serverDisconnect,
     }
 
-    /// <summary>Sent from client to server.</summary>
     public enum ClientPackets
     {
         welcomeReceived = 1,
@@ -26,6 +25,8 @@ namespace TEServer
         clientGrid,
         clientScore,
         clientGameOver,
+        clientLobbyCreate,
+        clientLobbyJoin,
         clientReconnect
     }
 

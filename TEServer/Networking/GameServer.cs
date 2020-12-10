@@ -3,12 +3,16 @@ using System.Net.Sockets;
 using System.Net;
 using System;
 
+using TEServer.Includes;
+
 namespace TEServer
 {
     public class GameServer
     {
         public delegate void PacketHandler(int fromClient, Packet packet);
+
         public static Dictionary<int, GameClientInstance> connectedClients;
+        public static Dictionary<int, GameLobbyInstance> openLobbies;
         public static Dictionary<int, PacketHandler> packetHandlers;
         public static TcpListener tcpListener;
 
@@ -18,6 +22,7 @@ namespace TEServer
         public static void InitializeServer(int userMaxPlayers, int userPort)
         {
             connectedClients = new Dictionary<int, GameClientInstance>();
+            openLobbies      = new Dictionary<int, GameLobbyInstance>();
             MaxPlayers       = userMaxPlayers;
             Port             = userPort;
             InitializeServerData();
@@ -54,7 +59,9 @@ namespace TEServer
                 { (int)ClientPackets.clientGrid, ServerHandle.ClientGrid},
                 { (int)ClientPackets.clientScore, ServerHandle.ClientScore},
                 { (int)ClientPackets.clientGameOver, ServerHandle.ClientGameOver},
-                { (int)ClientPackets.clientReconnect, ServerHandle.ClientReconnect}
+                { (int)ClientPackets.clientReconnect, ServerHandle.ClientReconnect},
+                { (int)ClientPackets.clientLobbyCreate, ServerHandle.ClientLobbyCreate},
+                { (int)ClientPackets.clientLobbyJoin, ServerHandle.ClientLobbyJoin}
             };
 
 
@@ -99,15 +106,17 @@ namespace TEServer
             return count;
         }
 
-        public static int CountReadyPlayers()
+        public static int CountReadyPlayers(int lobbyID)
         {
             int count = 0;
 
-            for (int i = 1; i <= MaxPlayers; i++)
+            for (int i = 0; i < openLobbies[lobbyID].PlayerCount; i++)
             {
-                if (connectedClients[i].tcp.socket != null)
+                var player = openLobbies[lobbyID].GetPlayerList()[i];
+
+                if (player.tcp.socket != null)
                 {
-                    if (connectedClients[i].Status == 1)
+                    if (player.Status == 1)
                     {
                         count++;
                     }

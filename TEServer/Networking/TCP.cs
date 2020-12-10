@@ -9,7 +9,7 @@ namespace TEServer
 
         private NetworkStream byteStream;
         private Packet dataIn;
-        private Byte[] receiveBuffer;
+        private byte[] receiveBuffer;
         private readonly int bufferSize;
 
         public int ID { get; private set; }
@@ -77,7 +77,7 @@ namespace TEServer
             }
         }
 
-        private bool HandleData(Byte[] receivedData)
+        private bool HandleData(byte[] receivedData)
         {
             int packetLength = 0;
 
@@ -94,7 +94,7 @@ namespace TEServer
 
             while (packetLength > 0 && packetLength <= dataIn.UnreadLength())
             {
-                Byte[] packetBytes = dataIn.ReadBytes(packetLength);
+                byte[] packetBytes = dataIn.ReadBytes(packetLength);
 
                 ThreadManager.ExecuteOnMainThread(() =>
                 {

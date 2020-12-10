@@ -1,6 +1,7 @@
-﻿using System;
+﻿using System.Net.NetworkInformation;
+using TEServer.Includes;
 using System.Threading;
-using System.Net.NetworkInformation;
+using System;
 
 namespace TEServer
 {
@@ -9,15 +10,22 @@ namespace TEServer
         private static bool isRunning;
         private static int maxPlayers;
         private static int port;
+
         private static Thread mainThread;
+        private static Thread commandThread;
 
         static void OnProcessExit(object sender, EventArgs e)
         {
+
+           isRunning = false;
+
             if (GameServer.tcpListener != null)
             {
                 Console.WriteLine(Constants.SHUTDOWN);
 
                 PacketSend.ServerDisconnect();
+
+                commandThread.Join();
                 mainThread.Join();
             }
         }
@@ -38,7 +46,7 @@ namespace TEServer
                 {
                     success      = false;
                     validPlayers = true;
-                    maxPlayers   = input;
+                    maxPlayers   = input * 4;
                 }
                 else
                 {
@@ -105,6 +113,32 @@ namespace TEServer
             }
         }
 
+        private static void CommandThread()
+        {
+            Console.WriteLine(Constants.COMMAND_THREAD_STARTED);
+
+            DateTime nextLoop = DateTime.Now;
+
+            while (isRunning)
+            {
+                while (nextLoop < DateTime.Now)
+                {
+
+                    string cmd = Console.ReadLine();
+                    ServerCommand.ProcessCommand(cmd);
+
+                    Update();
+
+                    nextLoop = nextLoop.AddMilliseconds(Constants.MST);
+
+                    if (nextLoop > DateTime.Now)
+                    {
+                        Thread.Sleep(nextLoop - DateTime.Now);
+                    }
+                }
+            }
+        }
+
         public static void Update()
         {
             ThreadManager.UpdateMain();
@@ -125,6 +159,9 @@ namespace TEServer
 
             mainThread = new Thread(new ThreadStart(MainThread));
             mainThread.Start();
+
+            commandThread = new Thread(new ThreadStart(CommandThread));
+            commandThread.Start();
         }
     }
 }

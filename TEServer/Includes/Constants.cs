@@ -2,13 +2,16 @@
 {
     public static class Constants
     {
-        public const int TPS = 20;
+
+        //SERVER TPS
+        public const int TPS = 30;
 
         public const int MST = 1000 / TPS;
 
+        //SERVER GENERAL PROMPTS 
         public static string TITLE                  = "Tetris Elemination Server V1.1";
 
-        public static string PROMPT_SERVER_PLAYERS  = "Enter the max players [2-5] that can join: ";
+        public static string PROMPT_SERVER_PLAYERS  = "Enter the max players per lobby [2-5]: ";
 
         public static string PROMPT_SERVER_PORT     = "Enter the port to listen on: ";
 
@@ -30,11 +33,13 @@
 
         public static string TCP_SEND_ERROR         = "Packet failed to send! ID: ";
 
-        public static string HANDSHAKE_COMPLETE     = "Player handshake complete, joining lobby as: ";
+        public static string HANDSHAKE_COMPLETE     = "Player handshake complete, joining server as: ";
 
         public static string INCONSISTENT_ID_ERROR  = "**Warning** ID check failed between received and sender ID for user: ";
 
         public static string MAIN_THREAD_STARTED    = "Main thread is starting [Lobby Controller]";
+
+        public static string COMMAND_THREAD_STARTED = "Command thread is starting [Command Handler]";
 
         public static string PLAYER_DISSCONECTED    = "Player disconnected: ";
 
@@ -44,8 +49,20 @@
 
         public static string IN_GAME                = " IN GAME!";
 
-        public static string GAME_STARTED           = "Game starting in 3... 2... 1... [Main Thread]";
+        public static string GAME_STARTED           = "Game starting in 3... 2... 1... [Main Thread] - ";
 
         public static string SHUTDOWN               = "INITIALIZING SAFE SHUTDOWN... \nSENDING DISCONNECT REQUEST...";
+
+        //SERVER COMMAND PROMPTS
+        public static string DO_HELP     = "\n ================================================ \n Supported commands: \n /help \n /log " +
+                                           "\n /shutdown \n /kick \n ================================================";
+
+        public static string DO_LOG      = "\n**log generated.";
+
+        public static string DO_SHUTDOWN = "\n**shutdown initiated.";
+
+        public static string DO_KICK     = "\n**kicking player: ";
+
+        public static string UNKNOWN     = "\n**unknown command, try /help for a list of avaliable commands.";
     }
 }
