@@ -38,10 +38,13 @@ namespace TEServer.Includes
 
         public void RemovePlayer(GameClientInstance player)
         {
-            playersInLobby.Remove(player);
-            PlayerCount--;
+            if (playersInLobby.Contains(player))
+            {
+                playersInLobby.Remove(player);
+                PlayerCount--;
 
-            IsFull = false;
+                IsFull = false;
+            }
         }
 
         public List<GameClientInstance> GetPlayerList()

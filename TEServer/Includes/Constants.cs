@@ -9,7 +9,7 @@
         public const int MST = 1000 / TPS;
 
         //SERVER GENERAL PROMPTS 
-        public static string TITLE                  = "Tetris Elemination Server V1.1";
+        public static string TITLE                  = "Tetris Elemination Server V3.0a";
 
         public static string PROMPT_SERVER_PLAYERS  = "Enter the max players per lobby [2-5]: ";
 
@@ -37,6 +37,8 @@
 
         public static string INCONSISTENT_ID_ERROR  = "**Warning** ID check failed between received and sender ID for user: ";
 
+        public static string USER_NOT_FOUND_ERROR   = "User not found with Name: ";
+
         public static string MAIN_THREAD_STARTED    = "Main thread is starting [Lobby Controller]";
 
         public static string COMMAND_THREAD_STARTED = "Command thread is starting [Command Handler]";
@@ -49,20 +51,24 @@
 
         public static string IN_GAME                = " IN GAME!";
 
+        public static string LOBBY_OPENED           = "'s Lobby has opened";
+
+        public static string LOBBY_CLOSED           = "'s Lobby has closed";
+
         public static string GAME_STARTED           = "Game starting in 3... 2... 1... [Main Thread] - ";
 
         public static string SHUTDOWN               = "INITIALIZING SAFE SHUTDOWN... \nSENDING DISCONNECT REQUEST...";
 
         //SERVER COMMAND PROMPTS
-        public static string DO_HELP     = "\n ================================================ \n Supported commands: \n /help \n /log " +
-                                           "\n /shutdown \n /kick \n ================================================";
+        public static string DO_HELP        = "\n ================================================ \n Supported commands: \n /help" +
+                                              "\n /exit \n /kick \n /disconnect \n ================================================";
 
-        public static string DO_LOG      = "\n**log generated.";
+        public static string DO_SHUTDOWN    = "\n**shutdown initiated.";
 
-        public static string DO_SHUTDOWN = "\n**shutdown initiated.";
+        public static string DO_KICK        = "\n**kicking player: ";
 
-        public static string DO_KICK     = "\n**kicking player: ";
+        public static string DO_DISCONNECT  = "\n**kicking player: ";
 
-        public static string UNKNOWN     = "\n**unknown command, try /help for a list of avaliable commands.";
+        public static string UNKNOWN        = "\n**unknown command, try /help for a list of avaliable commands.";
     }
 }

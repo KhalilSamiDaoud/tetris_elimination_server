@@ -125,6 +125,16 @@ namespace TEServer
             }
         }
 
+        public static void ServerKick(int clientID)
+        {
+            using (Packet packet = new Packet((int)ServerPackets.serverDisconnect))
+            {
+                packet.Write(true);
+
+                SendTCPData(clientID, packet);
+            }
+        }
+
         public static void ServerDisconnect()
         {
             using (Packet packet = new Packet((int)ServerPackets.serverDisconnect))

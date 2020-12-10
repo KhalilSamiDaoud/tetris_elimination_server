@@ -36,6 +36,8 @@ namespace TEServer
                 {
                     PacketSend.LobbyList();
                     GameServer.openLobbies.Remove(LobbyID);
+
+                    Console.WriteLine(UserName + Constants.LOBBY_CLOSED);
                 }
             }
 

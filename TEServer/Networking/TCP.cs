@@ -8,9 +8,9 @@ namespace TEServer
         public TcpClient socket;
 
         private NetworkStream byteStream;
-        private Packet dataIn;
-        private byte[] receiveBuffer;
         private readonly int bufferSize;
+        private byte[] receiveBuffer;
+        private Packet dataIn;
 
         public int ID { get; private set; }
 
@@ -45,9 +45,9 @@ namespace TEServer
                     byteStream.BeginWrite(packet.ToArray(), 0, packet.Length(), null, null);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(Constants.TCP_SEND_ERROR + ID + ex);
+                Console.WriteLine(Constants.TCP_SEND_ERROR + ID);
             }
         }
 
@@ -70,9 +70,9 @@ namespace TEServer
 
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(Constants.RECEIVE_CALLBACK_ERROR + e);
+                Console.WriteLine(Constants.RECEIVE_CALLBACK_ERROR);
                 GameServer.connectedClients[ID].Disconnect();
             }
         }

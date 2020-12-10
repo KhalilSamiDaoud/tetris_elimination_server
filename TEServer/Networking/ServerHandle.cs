@@ -104,8 +104,9 @@ namespace TEServer
 
                 player.LobbyID = id;
 
-
                 PacketSend.LobbyList();
+
+                Console.WriteLine(player.UserName + Constants.LOBBY_OPENED);
             }
 
             ValidatePlayerID(clientID, id);
