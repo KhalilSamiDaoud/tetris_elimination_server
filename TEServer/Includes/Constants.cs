@@ -1,5 +1,6 @@
 ﻿namespace TEServer
 {
+    /// <summary>The Constants class is a static class that defines constants used throughout the program. These are mostly prompts.</summary>
     public static class Constants
     {
 
@@ -53,7 +54,7 @@
 
         public static string LOBBY_OPENED           = "'s Lobby has opened";
 
-        public static string LOBBY_CLOSED           = "'s Lobby has closed";
+        public static string LOBBY_CLOSED           = " has closed";
 
         public static string GAME_STARTED           = "Game starting in 3... 2... 1... [Main Thread] - ";
 

@@ -3,8 +3,11 @@ using TEServer.Includes;
 
 namespace TEServer
 {
+    ///<summary>The PacketSend class is reponsible for assembling packets and sending them to the target client / clients.</summary>
     public class PacketSend
     {
+        /// <summary>Verifies the player and initiates the handshake.</summary>
+        /// <param name="clientID">The client identifier.</param>
         public static void WelcomeVerification(int clientID)
         {
             using (Packet packet = new Packet((int)ServerPackets.welcome))
@@ -18,6 +21,8 @@ namespace TEServer
             }
         }
 
+        /// <summary>Sends a list of players to the specified lobby.</summary>
+        /// <param name="lobbyID">The lobby identifier.</param>
         public static void PlayerList(int lobbyID)
         {
             var lobby = GameServer.openLobbies[lobbyID];
@@ -41,6 +46,8 @@ namespace TEServer
                 }
         }
 
+
+        /// <summary>Sends the lobby list to all players connected to the server.</summary>
         public static void LobbyList()
         {
 
@@ -61,6 +68,11 @@ namespace TEServer
             }
         }
 
+
+        /// <summary>Sends the new status of a client to all other clients in the lobby.</summary>
+        /// <param name="lobbyID">The lobby identifier.</param>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="msg">The new status of the player.</param>
         public static void PlayerReadyChange(int lobbyID, int clientID, int msg)
         {
             using (Packet packet = new Packet((int)ServerPackets.playerReadyChange))
@@ -71,6 +83,8 @@ namespace TEServer
             }
         }
 
+        /// <summary>Sends the new player count to all clients in the server except the specified client.</summary>
+        /// <param name="clientID">The client identifier.</param>
         public static void PlayerCountChange(int clientID)
         {
             using (Packet packet = new Packet((int)ServerPackets.playerCountChange))
@@ -82,7 +96,12 @@ namespace TEServer
             }
         }
 
-        public static void PlayerGrids(int lobbyID, int clientID, string msg)
+
+        /// <summary>Sends the specified players encoded grid to all other clients in the lobby.</summary>
+        /// <param name="lobbyID">The lobby identifier.</param>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="msg">The encoded grid data.</param>
+        public static void PlayerGrid(int lobbyID, int clientID, string msg)
         {
             using (Packet packet = new Packet((int)ServerPackets.playerGrids))
             {
@@ -93,6 +112,11 @@ namespace TEServer
             }
         }
 
+
+        /// <summary>Sends the specified players score to all other clients in the lobby.</summary>
+        /// <param name="lobbyID">The lobby identifier.</param>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="score">The score.</param>
         public static void PlayerScore(int lobbyID, int clientID, int score)
         {
             using (Packet packet = new Packet((int)ServerPackets.playerScore))
@@ -104,6 +128,10 @@ namespace TEServer
             }
         }
 
+        /// <summary>Sends the specified players "gameover" to all other clients in the lobby.</summary>
+        /// <param name="lobbyID">The lobby identifier.</param>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="gameOver">if set to <c>true</c> [game over].</param>
         public static void PlayerGameOver(int lobbyID, int clientID, bool gameOver)
         {
             using (Packet packet = new Packet((int)ServerPackets.playerGameOver))
@@ -115,6 +143,9 @@ namespace TEServer
             }
         }
 
+
+        /// <summary>Sends a StartGame packet to all clients in a lobby.</summary>
+        /// <param name="lobbyID">The lobby identifier.</param>
         public static void StartGame(int lobbyID)
         {
             using (Packet packet = new Packet((int)ServerPackets.startGame))
@@ -125,6 +156,9 @@ namespace TEServer
             }
         }
 
+
+        /// <summary>Kicks a player from the server (sends them a disconnect request).</summary>
+        /// <param name="clientID">The client identifier.</param>
         public static void ServerKick(int clientID)
         {
             using (Packet packet = new Packet((int)ServerPackets.serverDisconnect))
@@ -135,6 +169,8 @@ namespace TEServer
             }
         }
 
+
+        /// <summary>Disconnects all clients from the server.</summary>
         public static void ServerDisconnect()
         {
             using (Packet packet = new Packet((int)ServerPackets.serverDisconnect))
@@ -145,12 +181,17 @@ namespace TEServer
             }
         }
 
+        /// <summary>Sends the TCP data to a single client.</summary>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="packet">The packet.</param>
         private static void SendTCPData(int clientID, Packet packet)
         {
             packet.WriteLength();
             GameServer.connectedClients[clientID].tcp.SendData(packet);
         }
 
+        /// <summary>Sends the TCP data to all clients.</summary>
+        /// <param name="packet">The packet.</param>
         private static void SendTCPDataToAll(Packet packet)
         {
             packet.WriteLength();
@@ -160,6 +201,9 @@ namespace TEServer
             }
         }
 
+        /// <summary>Sends the TCP data to all clients except the specified client.</summary>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="packet">The packet.</param>
         private static void SendTCPDataToAllEx(int clientID, Packet packet)
         {
             packet.WriteLength();
@@ -170,6 +214,9 @@ namespace TEServer
             }
         }
 
+        /// <summary>Sends the TCP data to a single lobby.</summary>
+        /// <param name="lobbyID">The lobby identifier.</param>
+        /// <param name="packet">The packet.</param>
         private static void SendTCPDataToLobby(int lobbyID, Packet packet)
         {
             var lobby = GameServer.openLobbies[lobbyID];
@@ -182,6 +229,10 @@ namespace TEServer
             }
         }
 
+        /// <summary>Sends the TCP data to a sinle lobby except for the specified client.</summary>
+        /// <param name="lobbyID">The lobby identifier.</param>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="packet">The packet.</param>
         private static void SendTCPDataToLobbyEx(int lobbyID, int clientID, Packet packet)
         {
             var lobby = GameServer.openLobbies[lobbyID];

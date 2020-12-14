@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\khalil\\source\\repos\\TEServer\\TEServer\\TEServer.csproj": {}
+    "C:\\Users\\Khalils HP\\Source\\Repos\\tetris_elimination_server\\TEServer\\TEServer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\khalil\\source\\repos\\TEServer\\TEServer\\TEServer.csproj": {
+    "C:\\Users\\Khalils HP\\Source\\Repos\\tetris_elimination_server\\TEServer\\TEServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\khalil\\source\\repos\\TEServer\\TEServer\\TEServer.csproj",
+        "projectUniqueName": "C:\\Users\\Khalils HP\\Source\\Repos\\tetris_elimination_server\\TEServer\\TEServer.csproj",
         "projectName": "TEServer",
-        "projectPath": "C:\\Users\\khalil\\source\\repos\\TEServer\\TEServer\\TEServer.csproj",
-        "packagesPath": "C:\\Users\\khalil\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\khalil\\source\\repos\\TEServer\\TEServer\\obj\\",
+        "projectPath": "C:\\Users\\Khalils HP\\Source\\Repos\\tetris_elimination_server\\TEServer\\TEServer.csproj",
+        "packagesPath": "C:\\Users\\Khalils HP\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Khalils HP\\Source\\Repos\\tetris_elimination_server\\TEServer\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\khalil\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Khalils HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -52,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

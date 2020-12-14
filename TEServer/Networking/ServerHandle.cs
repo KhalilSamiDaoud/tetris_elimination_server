@@ -3,8 +3,16 @@ using System;
 
 namespace TEServer
 {
+    /// <summary>This class handles all incoming packet types from clients. Packets are usually send in lresponse to incoming packets.</summary>
     class ServerHandle
     {
+
+        /// <summary>Welcomes the specified client. The client receives all the nessesary server information. Informs other
+        /// clients that the player count has changed</summary>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="packet">The incoming packet.</param>
+        /// <remarks>This function sends a "PlayerCountChange" packet.</remarks>
+        /// <remarks>This function sends a "LobbyList" packet.</remarks>
         public static void Welcome(int clientID, Packet packet)
         {
             int id     = packet.ReadInt();
@@ -19,6 +27,11 @@ namespace TEServer
             ValidatePlayerID(clientID, id);
         }
 
+        /// <summary>Receives a clients new status, all other clients in the lobby are informed of the new status. This
+        /// function calls CheckLobbyReady() when a status changes.</summary>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="packet">The incoming packet.</param>
+        /// <remarks>This function sends a "PlayerReadyChange" packet.</remarks>
         public static void ClientStatus(int clientID, Packet packet)
         {
             int id  = packet.ReadInt();
@@ -42,25 +55,28 @@ namespace TEServer
             player.Status = msg;
             PacketSend.PlayerReadyChange(player.LobbyID, id, msg);
 
-            if (GameServer.CountReadyPlayers(player.LobbyID) == (GameServer.MaxPlayers / 4))
-            {
-                PacketSend.StartGame(player.LobbyID);
-                Console.WriteLine(Constants.GAME_STARTED + GameServer.openLobbies[player.LobbyID].Name);
-            }
-
+            CheckLobbyReady(player);
             ValidatePlayerID(clientID, id);
         }
 
+        /// <summary>Receives a clients encoded grid. All other clients in the lobby are notified of this.</summary>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="packet">The incoming packet.</param>
+        /// <remarks>This function sends a "PlayerGrid" packet.</remarks>
         public static void ClientGrid(int clientID, Packet packet)
         {
             int id     = packet.ReadInt();
             string msg = packet.ReadString();
 
-            PacketSend.PlayerGrids(GameServer.connectedClients[id].LobbyID, id, msg);
+            PacketSend.PlayerGrid(GameServer.connectedClients[id].LobbyID, id, msg);
 
             ValidatePlayerID(clientID, id);
         }
 
+        /// <summary>Receives a clients score. All other clients in the lobby are notified of this.</summary>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="packet">The incoming packet.</param>
+        /// <remarks>This function sends a "PlayerScore" packet.</remarks>
         public static void ClientScore(int clientID, Packet packet)
         {
             int id  = packet.ReadInt();
@@ -71,6 +87,10 @@ namespace TEServer
             ValidatePlayerID(clientID, id);
         }
 
+        /// <summary>Receives a clients 'gameover'. All other clients in the lobby are notified of this.</summary>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="packet">The incoming packet.</param>
+        /// <remarks>This function sends a "PlayerGameOver" packet.</remarks>
         public static void ClientGameOver(int clientID, Packet packet)
         {
             int id   = packet.ReadInt();
@@ -81,6 +101,10 @@ namespace TEServer
             ValidatePlayerID(clientID, id);
         }
 
+        /// <summary>Reconnects the client to the server by sending them a new welcome verification.</summary>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="packet">The incoming packet.</param>
+        /// <remarks>This function sends a "WelcomeVerification" packet.</remarks>
         public static void ClientReconnect(int clientID, Packet packet)
         {
             int id = packet.ReadInt();
@@ -90,6 +114,11 @@ namespace TEServer
             ValidatePlayerID(clientID, id);
         }
 
+        /// <summary>Creates a lobby as requested by a client. The lobby will not be created if there are already four lobbies.
+        /// If the lobby is created, inform all other clients of the new lobby.</summary>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="packet">The incoming packet.</param>
+        /// <remarks>This function sends a "LobbyList" packet.</remarks>
         public static void ClientLobbyCreate(int clientID, Packet packet)
         {
             int id = packet.ReadInt();
@@ -112,6 +141,12 @@ namespace TEServer
             ValidatePlayerID(clientID, id);
         }
 
+        /// <summary>Puts a client into the specified lobby (specified in the packet). The client is not connected if the lobby is full.
+        /// If the client is connected, update the lobby list and player list for all other clients.</summary>
+        /// <param name="clientID">The client identifier.</param>
+        /// <param name="packet">The incoming packet.</param>
+        /// <remarks>This function sends a "PlayerList" packet.</remarks>
+        /// <remarks>This function sends a "LobbyList" packet.</remarks>
         public static void ClientLobbyJoin(int clientID, Packet packet)
         {
             int id      = packet.ReadInt();
@@ -132,6 +167,21 @@ namespace TEServer
             ValidatePlayerID(clientID, id);
         }
 
+        /// <summary>Checks if the entire lobby is ready, if it is, then start the game.</summary>
+        /// <param name="player">The player.</param>
+        /// <remarks>This function sends a "StartGame" packet.</remarks>
+        private static void CheckLobbyReady(GameClientInstance player)
+        {
+            if (GameServer.CountReadyPlayers(player.LobbyID) == (GameServer.MaxPlayers / 4))
+            {
+                PacketSend.StartGame(player.LobbyID);
+                Console.WriteLine(Constants.GAME_STARTED + GameServer.openLobbies[player.LobbyID].Name);
+            }
+        }
+
+        /// <summary>Validates that the senders ID matches the ID attached to the packet. This is to prevent packet mishandling</summary>
+        /// <param name="senderID">The sender identifier.</param>
+        /// <param name="packetID">The packet identifier.</param>
         private static void ValidatePlayerID(int senderID, int packetID)
         {
             if (senderID != packetID)

@@ -5,6 +5,8 @@ using System;
 
 namespace TEServer
 {
+    /// <summary> The Program class is the starting point of TEServer and contains the Main function. In here, the command thread
+    /// and the lobby controller thread are created. The server player count and the port are specified here.</summary>
     class Program
     {
         private static bool isRunning;
@@ -14,7 +16,10 @@ namespace TEServer
         private static Thread mainThread;
         private static Thread commandThread;
 
-        static void OnProcessExit(object sender, EventArgs e)
+        /// <summary>On exit, disconnect all players and then join all threads. There is a 3 second delay on exit.</summary>
+        /// <param name="sender">The Event Sender, Process</param>
+        /// <param name="e">The event argument, OnProcessExit</param>
+        private static void OnProcessExit(object sender, EventArgs e)
         {
 
            isRunning = false;
@@ -30,7 +35,8 @@ namespace TEServer
             }
         }
 
-        public static void StartupPrompt()
+        /// <summary>Before starting threads, attempt to get server port and player count.</summary>
+        private static void StartupPrompt()
         {
             bool validPlayers = false;
             bool validPort    = false;
@@ -44,7 +50,6 @@ namespace TEServer
 
                 if(input >= 2 && input <= 5 && success)
                 {
-                    success      = false;
                     validPlayers = true;
                     maxPlayers   = input * 4;
                 }
@@ -53,6 +58,8 @@ namespace TEServer
                     Console.WriteLine(Constants.BAD_INPUT_ERROR);
                 }
             }
+
+            success = false;
 
             while(!validPort)
             {
@@ -74,6 +81,9 @@ namespace TEServer
             }
         }
 
+        /// <summary>Check port provided by user, if its open return true. Otherwise return false.</summary>
+        /// <param name="port">The port number provided by the user.</param>
+        /// <returns> True if port is valid, False otherwise.</returns>
         private static bool CheckPort(int port)
         {
             IPGlobalProperties ports              = IPGlobalProperties.GetIPGlobalProperties();
@@ -90,6 +100,8 @@ namespace TEServer
             return true;
         }
 
+        /// <summary>The MainThread loop, which puts the thread to sleep until the time interval has elapsed. This thread
+        /// controls all lobby and network related events.</summary>
         private static void MainThread()
         {
             Console.WriteLine(Constants.MAIN_THREAD_STARTED);
@@ -113,6 +125,8 @@ namespace TEServer
             }
         }
 
+        /// <summary>The CommandThread loop, which puts the thread to sleep until the time interval has elapsed. This thread
+        /// controls all user input events and processes them.</summary>
         private static void CommandThread()
         {
             Console.WriteLine(Constants.COMMAND_THREAD_STARTED);
@@ -139,11 +153,14 @@ namespace TEServer
             }
         }
 
-        public static void Update()
+        /// <summary>Call UpdateMain() in the ThreadManager.</summary>
+        private static void Update()
         {
             ThreadManager.UpdateMain();
         }
 
+        /// <summary>The starting point of TEServer. This function is responsible for outputing initial prompts and initializeing the server, 
+        /// and for starting mainThread and the commandThread threads. It also sets the windows title.</summary>
         static void Main(string[] args)
         {
             isRunning     = true;
@@ -157,7 +174,7 @@ namespace TEServer
             Console.WriteLine(Constants.INITIALIZE);
             GameServer.InitializeServer(maxPlayers, port);
 
-            mainThread = new Thread(new ThreadStart(MainThread));
+            mainThread    = new Thread(new ThreadStart(MainThread));
             mainThread.Start();
 
             commandThread = new Thread(new ThreadStart(CommandThread));

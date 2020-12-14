@@ -2,8 +2,12 @@
 
 namespace TEServer.Includes
 {
+    /// <summary>The ServerCommand static class receives commands as a string, and processes those commands.</summary>
     public static class ServerCommand
     {
+
+        /// <summary>The GameLobbyInstance class stores lobby information for a single lobby instance. It stores lobby PlayerCount,
+        /// Name, IsFull, and the lobby UID</summary>
         public static void ProcessCommand(string cmd)
         {
 
@@ -32,6 +36,8 @@ namespace TEServer.Includes
             }
         }
 
+        /// <summary>Kicks the specified player. If multiple players with the same name are connected, kick only the first found one.</summary>
+        /// <param name="player">The player.</param>
         private static void Kick(string player)
         {
             foreach(GameClientInstance x in GameServer.connectedClients.Values)

@@ -2,6 +2,8 @@
 
 namespace TEServer
 {
+    /// <summary>The GameClientInstance class stores client information for a sinle connected client. It stores the clients
+    /// TCP instance, Status, Name, and connected LobbyID.</summary>
     public class GameClientInstance
     {
         public TCP tcp;
@@ -11,6 +13,8 @@ namespace TEServer
         public int UID         { get; private set; }
         public int LobbyID     { get; set; }
 
+        /// <summary>GameClientInstance Constructor</summary>
+        /// <param name="clientID">The clients unique ID</param>
         public GameClientInstance(int clientID)
         {
             UID      = clientID;
@@ -20,6 +24,13 @@ namespace TEServer
             Status   = 0;
         }
 
+        /// <summary>Disconnect the client from the server, notify other users of this event, and reset the state of this client instance. 
+        /// If the client was in a lobby, check to see if that lobby is not empty. If so, delete the lobby.</summary>
+        /// <param name="clientID">The clients unique ID</param>
+        /// <remarks> This function sends a "PlayerList" packet.</remarks>
+        /// <remarks> This function sends a "PlayerGameOver" packet.</remarks>
+        /// <remarks> This function sends a "LobbyList" packet.</remarks>
+        /// <remarks> This function sends a "PlayerCountChange" packet.</remarks>
         public void Disconnect()
         {
             Console.WriteLine(Constants.PLAYER_DISSCONECTED + UserName);
@@ -31,14 +42,6 @@ namespace TEServer
                 PacketSend.PlayerGameOver(LobbyID, UID, true);
 
                 GameServer.openLobbies[LobbyID].RemovePlayer(this);
-
-                if (GameServer.openLobbies[LobbyID].PlayerCount == 0)
-                {
-                    PacketSend.LobbyList();
-                    GameServer.openLobbies.Remove(LobbyID);
-
-                    Console.WriteLine(UserName + Constants.LOBBY_CLOSED);
-                }
             }
 
             PacketSend.LobbyList();

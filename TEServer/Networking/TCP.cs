@@ -3,6 +3,7 @@ using System;
 
 namespace TEServer
 {
+    /// <summary> The TCP class manages tcp connections between the server and the client. The server only handles the TCP protocol.</summary>
     public class TCP
     {
         public TcpClient socket;
@@ -14,12 +15,17 @@ namespace TEServer
 
         public int ID { get; private set; }
 
+        /// <summary>Initializes a new instance of the <see cref="TCP" /> class.</summary>
+        /// <param name="uniqueID">The unique identifier.</param>
         public TCP(int uniqueID)
         {
             bufferSize = 4096; //bytes
             ID         = uniqueID;
         }
 
+        /// <summary>Connects the specified client to the server. Initializes the receive buffer and socket.</summary>
+        /// <param name="clientsSocket">The clients socket.</param>
+        /// <remarks>This function sends a "WelcomeVerification" packet.</remarks>
         public void Connect(TcpClient clientsSocket)
         {
             socket = clientsSocket;
@@ -36,6 +42,8 @@ namespace TEServer
             PacketSend.WelcomeVerification(ID);
         }
 
+        /// <summary>Writes the packet to the bytestream and sends it to the client.</summary>
+        /// <param name="packet">The packet to send.</param>
         public void SendData(Packet packet)
         {
             try
@@ -51,6 +59,9 @@ namespace TEServer
             }
         }
 
+        /// <summary>Receives client packets and reads the data from it. If there are any errors with the packet, then the client
+        /// is disconnected from the server and an error message is displayed (This is unlikely with TCP).</summary>
+        /// <param name="result">The Async result.</param>
         private void ReceiveCallback(IAsyncResult result)
         {
             try
@@ -77,6 +88,10 @@ namespace TEServer
             }
         }
 
+        /// <summary>Puts received bytes in the datain array. If the packet length is greater than 4, then there is still unread data.
+        /// if it is less than or equal to 4, then the packet has reached its end.</summary>
+        /// <param name="receivedData">The received data.</param>
+        /// <returns>True if the packet is fully read</returns>
         private bool HandleData(byte[] receivedData)
         {
             int packetLength = 0;
@@ -125,6 +140,7 @@ namespace TEServer
             return false;
         }
 
+        /// <summary>Disconnects the client, and resets the state of this TCP instance.</summary>
         public void Disconnect()
         {
             socket.Close();
